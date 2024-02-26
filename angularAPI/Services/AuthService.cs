@@ -18,7 +18,7 @@ namespace angularAPI.Services
         }
 
         public DataTable Authenticate(AuthModel auth)
-        {
+        {   
             try
             {
 
@@ -48,11 +48,6 @@ namespace angularAPI.Services
            
         }
 
-        public DataTable RegisterAdmin(AuthModel auth)
-        {
-            throw new NotImplementedException();
-        }
-
         public DataTable RegisterUser(AuthModel auth)
         {
             try
@@ -69,12 +64,13 @@ namespace angularAPI.Services
 
                         cmd.CommandText = "AUTH_PROCEDURE"; 
                         cmd.BindByName = true;
-                        cmd.Parameters.Add("ARG_FLAG", OracleDbType.Decimal).Value = 2;
+                        cmd.Parameters.Add("ARG_FLAG", OracleDbType.Int32).Value = 2;
                         cmd.Parameters.Add("ARG_FIRSTNAME", OracleDbType.Varchar2).Value = auth.firstName;
                         cmd.Parameters.Add("ARG_LASTNAME", OracleDbType.Varchar2).Value = auth.lastName;
                         cmd.Parameters.Add("ARG_MAIL", OracleDbType.Varchar2).Value = auth.email;
                         cmd.Parameters.Add("ARG_PASSWORD", OracleDbType.Varchar2).Value = auth.password;
                         cmd.Parameters.Add("ARG_CREATEDBY", OracleDbType.Varchar2).Value = auth.firstName + ' ' + auth.lastName;
+                        cmd.Parameters.Add("ARG_TOKEN", OracleDbType.Varchar2).Value = auth.token;
                         cmd.Parameters.Add("ARG_OUTPUT", OracleDbType.RefCursor, 100).Direction = ParameterDirection.Output;
                         OracleDataAdapter oda = new OracleDataAdapter(cmd);
                         oda.Fill(dt);

@@ -9,7 +9,6 @@ namespace angularAPI.Interfaces
 
         DataTable RegisterUser(AuthModel auth);
 
-        DataTable RegisterAdmin(AuthModel auth);
 
     }
 }

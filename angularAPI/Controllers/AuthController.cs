@@ -30,21 +30,27 @@ namespace angularAPI.Controllers
         {
             if(auth == null)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    message="Invalid Data"
+                });
             }
 
             DataTable result = _authService.Authenticate(auth);
             
             if(result.Rows.Count == 0)
             {
-                return NoContent();
+                return BadRequest(new
+                {
+                    message="Wrong Credentials"
+                });
 
             }
             else
             {
                 return Ok(new
                 {
-                    message = "it is hit",
+                    message = "Welcome Back !",
                     data = JsonConvert.SerializeObject(result)
                 }); ;
             }
@@ -67,7 +73,18 @@ namespace angularAPI.Controllers
 
             if (result == null)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    message="Something went wrong"
+                });
+            }
+
+            if (result.Rows[0]["EXIST"].ToString() == "YES")
+            {
+                return BadRequest(new
+                {
+                    message="Already registed !"
+                });
             }
 
             if (result.Rows.Count == 0)
